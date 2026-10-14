@@ -2,221 +2,24 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Soporte de Castor</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
-<style>
-/* Una columna de lectura (≈65 caracteres): cabecera con el castor, resumen "en corto" y secciones numeradas
-   porque en un texto legal el número es la referencia. Colores del icono de Castor: agua (teal) y naranja. */
-:root {
-  --bg: #f4f8f7;
-  --surface: #ffffff;
-  --fg: #16292a;
-  --muted: #53686a;
-  --line: #d6e3e1;
-  --water: #1c8f86;
-  --accent: #d95f25;
-  --pending-bg: #fff1c2;
-  --pending-fg: #6b4a00;
-  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
-  --body: "Source Sans 3", "Helvetica Neue", Arial, system-ui, sans-serif;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0e1b1c; --surface: #152628; --fg: #e3eeed; --muted: #9db3b2; --line: #26403f;
-    --water: #45c9bd; --accent: #f08a4b; --pending-bg: #4a3a0a; --pending-fg: #ffe28a;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #0e1b1c; --surface: #152628; --fg: #e3eeed; --muted: #9db3b2; --line: #26403f;
-  --water: #45c9bd; --accent: #f08a4b; --pending-bg: #4a3a0a; --pending-fg: #ffe28a;
-  color-scheme: dark;
-}
-
-body {
-  background: var(--bg);
-  color: var(--fg);
-  font-family: var(--body);
-  font-size: 1.0625rem;
-  line-height: 1.6;
-  padding-inline: 16px;
-  padding-block: 32px 64px;
-}
-.page { max-width: 42rem; margin: 0 auto; display: flex; flex-direction: column; gap: 2rem; }
-
-header { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
-header .mark { width: 64px; height: 64px; flex: none; }
-header .titles { flex: 1 1 16rem; min-width: 0; }
-.eyebrow {
-  font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--water); font-weight: 600;
-}
-h1 {
-  font-family: var(--display); font-weight: 800; font-size: clamp(2rem, 6vw, 2.75rem); line-height: 1.05;
-  margin: 0.15rem 0 0; text-wrap: balance;
-}
-.updated { color: var(--muted); font-size: 0.95rem; margin: 0.35rem 0 0; }
-
-.lang { display: flex; gap: 0.5rem; }
-.lang button {
-  font: 600 0.9rem var(--body); color: var(--muted); background: transparent; border: 1px solid var(--line);
-  border-radius: 999px; padding: 0.35rem 0.9rem; cursor: pointer;
-}
-.lang button[aria-pressed="true"] { color: var(--bg); background: var(--fg); border-color: var(--fg); }
-.lang button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-
-.short {
-  background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 1.25rem 1.4rem;
-  display: flex; flex-direction: column; gap: 0.6rem;
-}
-.short h2 { font-family: var(--display); font-weight: 600; font-size: 1.15rem; margin: 0; color: var(--water); }
-.short ul { margin: 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.35rem; }
-.short strong { color: var(--fg); }
-
-.doc { display: flex; flex-direction: column; gap: 1.75rem; }
-section h2 {
-  font-family: var(--display); font-weight: 600; font-size: 1.35rem; line-height: 1.2; margin: 0 0 0.5rem;
-  text-wrap: balance; display: flex; gap: 0.6rem; align-items: baseline;
-}
-section h2 .n { color: var(--accent); font-variant-numeric: tabular-nums; min-width: 1.6rem; }
-section h3 { font-size: 1.02rem; font-weight: 600; margin: 1rem 0 0.25rem; }
-section p, section ul { margin: 0 0 0.6rem; }
-section ul { padding-left: 1.2rem; }
-section li + li { margin-top: 0.25rem; }
-.muted { color: var(--muted); }
-a { color: var(--water); text-underline-offset: 2px; }
-.email { font-weight: 600; color: var(--fg); user-select: all; overflow-wrap: anywhere; }
-footer { border-top: 1px solid var(--line); padding-top: 1rem; color: var(--muted); font-size: 0.9rem; }
-</style>
-</head>
-<body>
-
-<div class="page">
-  <header>
-    <svg class="mark" viewBox="0 0 64 64" role="img" aria-label="Castor">
-      <defs>
-        <linearGradient id="water" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#2ec4b6"/><stop offset="1" stop-color="#127a78"/>
-        </linearGradient>
-      </defs>
-      <circle cx="32" cy="32" r="32" fill="url(#water)"/>
-      <path d="M13 34a19 19 0 0 1 38 0" fill="none" stroke="#f3934a" stroke-width="5" stroke-linecap="round"/>
-      <rect x="9" y="31" width="9" height="15" rx="4.5" fill="#e86b2e"/>
-      <rect x="46" y="31" width="9" height="15" rx="4.5" fill="#e86b2e"/>
-      <circle cx="32" cy="38" r="14" fill="#a86b3c"/>
-      <ellipse cx="32" cy="43" rx="8" ry="6" fill="#ddb07e"/>
-      <path d="M25 35q2.5-2.5 5 0M34 35q2.5-2.5 5 0" fill="none" stroke="#2a170c" stroke-width="1.8" stroke-linecap="round"/>
-      <ellipse cx="32" cy="40" rx="2.4" ry="1.6" fill="#2a170c"/>
-      <rect x="29.4" y="43" width="2.4" height="4" rx="0.6" fill="#ffffff"/>
-      <rect x="32.2" y="43" width="2.4" height="4" rx="0.6" fill="#ffffff"/>
-    </svg>
-    <div class="titles">
-      <div class="eyebrow" data-lang="es">Castor · app de podcasts</div>
-      <div class="eyebrow" data-lang="en" hidden>Castor · podcast app</div>
-      <h1 data-lang="es">Soporte</h1>
-      <h1 data-lang="en" hidden>Support</h1>
-    </div>
-    <div class="lang" role="group" aria-label="Idioma / Language">
-      <button type="button" id="lang-es" data-set="es" aria-pressed="true">Español</button>
-      <button type="button" id="lang-en" data-set="en" aria-pressed="false">English</button>
-    </div>
-  </header>
-
-  <!-- ====================== ESPAÑOL ====================== -->
-  <div data-lang="es">
-    <div class="short">
-      <h2>¿Necesitas ayuda?</h2>
-      <p>Escribe a <span class="email">castor.app@icloud.com</span> contando qué ocurre, en qué dispositivo y con qué versión de la app (Ajustes, al final). Respondo personalmente, normalmente en un par de días.</p>
-    </div>
-
-    <div class="doc">
-      <section>
-        <h2><span class="n">1</span>Castor Pro y compras</h2>
-        <p>Castor Pro es un pago único, sin suscripción, con una prueba gratis de 14 días. Si cambias de iPhone o reinstalas la app, ve a Ajustes → Castor Pro → Restaurar compras. La compra vale en todos tus dispositivos con el mismo Apple Account, también en el Apple Watch. Los reembolsos los gestiona Apple en <a href="https://reportaproblem.apple.com" rel="noopener">reportaproblem.apple.com</a>.</p>
-      </section>
-      <section>
-        <h2><span class="n">2</span>Añadir podcasts</h2>
-        <p>Toca + en Podcasts para buscar en el directorio de Apple Podcasts o pega la URL del feed (sirve también para podcasts de pago). Para traer tus suscripciones de otra app, exporta un fichero OPML y ábrelo con Castor o impórtalo desde Ajustes.</p>
-      </section>
-      <section>
-        <h2><span class="n">3</span>Sincronización con iCloud</h2>
-        <p>Suscripciones, progreso, A continuación y marcadores se sincronizan con tu iCloud. Si no aparecen en otro dispositivo, comprueba que tienes iCloud activado para Castor en Ajustes del sistema → tu nombre → iCloud, y deja la app abierta unos minutos la primera vez.</p>
-      </section>
-      <section>
-        <h2><span class="n">4</span>Transcripciones y Apple Intelligence</h2>
-        <p>Si el podcast publica transcripciones, Castor las usa. Si no, las genera en tu iPhone, sin enviar el audio a ningún servidor; un episodio largo puede tardar varios minutos. Los resúmenes y «Pregunta a tus podcasts» necesitan un iPhone compatible con Apple Intelligence.</p>
-      </section>
-      <section>
-        <h2><span class="n">5</span>Apple Watch</h2>
-        <p>El reloj solo reproduce audio largo por auriculares o altavoces Bluetooth. Descarga los episodios en el reloj desde su ficha para escucharlos sin el iPhone.</p>
-      </section>
-      <section>
-        <h2><span class="n">6</span>Privacidad</h2>
-        <p>Castor no recoge datos personales. Consulta la <a href="./">política de privacidad</a>.</p>
-      </section>
-    </div>
-  </div>
-
-  <!-- ====================== ENGLISH ====================== -->
-  <div data-lang="en" hidden>
-    <div class="short">
-      <h2>Need help?</h2>
-      <p>Email <span class="email">castor.app@icloud.com</span> describing what happens, on which device and with which app version (at the bottom of Settings). I answer personally, usually within a couple of days.</p>
-    </div>
-
-    <div class="doc">
-      <section>
-        <h2><span class="n">1</span>Castor Pro and purchases</h2>
-        <p>Castor Pro is a one-time purchase, not a subscription, with a free 14-day trial. If you switch iPhones or reinstall the app, go to Settings → Castor Pro → Restore Purchases. It works on all your devices with the same Apple Account, including Apple Watch. Refunds are handled by Apple at <a href="https://reportaproblem.apple.com" rel="noopener">reportaproblem.apple.com</a>.</p>
-      </section>
-      <section>
-        <h2><span class="n">2</span>Adding podcasts</h2>
-        <p>Tap + in Podcasts to search the Apple Podcasts directory or paste a feed URL (premium feeds work too). To bring your subscriptions from another app, export an OPML file and open it with Castor or import it from Settings.</p>
-      </section>
-      <section>
-        <h2><span class="n">3</span>iCloud sync</h2>
-        <p>Subscriptions, progress, Up Next and bookmarks sync through your iCloud. If they don’t show up on another device, check that iCloud is turned on for Castor in system Settings → your name → iCloud, and keep the app open for a few minutes the first time.</p>
-      </section>
-      <section>
-        <h2><span class="n">4</span>Transcripts and Apple Intelligence</h2>
-        <p>If a podcast publishes transcripts, Castor uses them. Otherwise it creates them on your iPhone, without sending audio to any server; a long episode can take several minutes. Summaries and “Ask your podcasts” require an iPhone that supports Apple Intelligence.</p>
-      </section>
-      <section>
-        <h2><span class="n">5</span>Apple Watch</h2>
-        <p>The watch only plays long-form audio through Bluetooth headphones or speakers. Download episodes to the watch from their page to listen without your iPhone.</p>
-      </section>
-      <section>
-        <h2><span class="n">6</span>Privacy</h2>
-        <p>Castor doesn’t collect personal data. See the <a href="./#en">privacy policy</a>.</p>
-      </section>
-    </div>
-  </div>
-
-  <footer>
-    <span data-lang="es">Castor · Hecho con dientes grandes 🦫</span>
-    <span data-lang="en" hidden>Castor · Made with big teeth 🦫</span>
-  </footer>
-</div>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Castor · Soporte</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://castorpodcast.com/soporte/">
 <script>
+// La página se ha mudado a castorpodcast.com. #en / #es eligen el idioma (enlaces de la app y App Store Connect);
+// si no, el del navegador.
 (function () {
-  function setLang(lang) {
-    document.querySelectorAll('[data-lang]').forEach(function (el) { el.hidden = el.dataset.lang !== lang; });
-    document.querySelectorAll('.lang button').forEach(function (b) {
-      b.setAttribute('aria-pressed', String(b.dataset.set === lang));
-    });
-    document.documentElement.lang = lang;
-  }
-  document.querySelectorAll('.lang button').forEach(function (b) {
-    b.addEventListener('click', function () { setLang(b.dataset.set); });
-  });
-  // #en / #es en el enlace eligen el idioma (App Store Connect admite una URL por idioma); si no, el del navegador.
   var hash = (location.hash || '').replace('#', '');
   var nav = (navigator.language || 'es').toLowerCase();
-  setLang(hash === 'en' || hash === 'es' ? hash : (nav.indexOf('es') === 0 ? 'es' : 'en'));
+  var lang = hash === 'en' || hash === 'es' ? hash : (nav.indexOf('es') === 0 ? 'es' : 'en');
+  location.replace('https://castorpodcast.com' + (lang === 'es' ? '/soporte/' : '/en/support/'));
 })();
 </script>
+<meta http-equiv="refresh" content="0; url=https://castorpodcast.com/soporte/">
+</head>
+<body>
+<p>Esta página se ha trasladado a <a href="https://castorpodcast.com/soporte/">castorpodcast.com/soporte/</a>.</p>
+<p lang="en">This page has moved to <a href="https://castorpodcast.com/en/support/">castorpodcast.com/en/support/</a>.</p>
 </body>
 </html>

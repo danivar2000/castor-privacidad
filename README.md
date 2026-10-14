@@ -1,10 +1,10 @@
-# Política de privacidad de Castor
+# Castor — redirecciones
 
-Página pública con la política de privacidad de **Castor**, app de podcasts para iPhone, Apple Watch y CarPlay.
+La política de privacidad y el soporte de **Castor** están ahora en https://castorpodcast.com (código en el repo de
+la app, carpeta `web/`). Este sitio de GitHub Pages solo redirige las direcciones antiguas, que siguen enlazadas desde
+la app ya publicada (1.0 y 1.1) y App Store Connect:
 
-- Español: https://danivar2000.github.io/castor-privacidad/#es
-- English: https://danivar2000.github.io/castor-privacidad/#en
-- Soporte / Support: https://danivar2000.github.io/castor-privacidad/soporte.html (`#es` / `#en`)
+- `/castor-privacidad/` (`#es` / `#en`) → https://castorpodcast.com/privacidad/ · https://castorpodcast.com/en/privacy/
+- `/castor-privacidad/soporte.html` (`#es` / `#en`) → https://castorpodcast.com/soporte/ · https://castorpodcast.com/en/support/
 
-La enlazan App Store Connect y la propia app (Ajustes → Política de privacidad). Si cambia la forma en que la app
-trata los datos, se actualiza `index.html` (y su fecha) antes de publicar esa versión.
+Sin `#idioma` se usa el del navegador. No borrar el repositorio mientras haya versiones de la app que lo enlacen.
